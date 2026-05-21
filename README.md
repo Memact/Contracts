@@ -4,6 +4,9 @@ Contracts define the data shapes used by the Memact SDK, backend, and feature ru
 
 They are small validators, not storage or network code.
 
+If a contributor is unsure how a feature or SDK call should shape its data, this
+repo is the first place to check.
+
 ## Owns
 
 - Capture event shape.
@@ -20,6 +23,24 @@ They are small validators, not storage or network code.
 - Inference logic.
 - Feature execution.
 - Memory retrieval.
+
+## Current Code
+
+Validators return:
+
+```js
+{ ok: true, value }
+```
+
+or:
+
+```js
+{ ok: false, errors: [{ path, message }] }
+```
+
+The package exports validators for capture events, inference records, schema
+packets, memory records, feature manifests, feature run requests/results,
+access policies, and API errors.
 
 ## Development
 
