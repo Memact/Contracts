@@ -1,0 +1,8 @@
+{
+  "surface": "connect",
+  "app_id": "article_app",
+  "redirect_uri": "https://example.com/memact/callback",
+  "requested_scopes": ["capture:event_write", "feature:run", "memory:read_summary"],
+  "requested_categories": ["reading"],
+  "plain_language_reason": "Use reading activity to run approved Memact features."
+}

@@ -42,6 +42,15 @@ The package exports validators for capture events, inference records, schema
 packets, memory records, feature manifests, feature run requests/results,
 access policies, and API errors.
 
+## Consent and Wiki Examples
+
+The `examples/` folder includes small request examples for:
+
+- Connect/consent links before app access.
+- Wiki links after app access.
+
+These examples are intentionally simple. Access owns permission checks; Website owns the user-facing pages.
+
 ## Development
 
 ```powershell

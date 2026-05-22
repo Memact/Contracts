@@ -57,9 +57,9 @@ test("valid schema packet and feature manifest pass", () => {
   }).ok, true)
   assert.equal(validateFeatureManifest({
     schema_version: "memact.feature_manifest.v0",
-    feature_id: "user-context-wiki",
-    name: "Memory Wiki",
-    description: "Groups context.",
+    feature_id: "adaptive-article-overview",
+    name: "Adaptive Article Overview",
+    description: "Creates article overviews from approved reading memory.",
     required_scopes: [],
     required_schema_types: [],
     input_contract: "memact.schema_packet.v0",

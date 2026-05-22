@@ -1,0 +1,12 @@
+{
+  "surface": "wiki",
+  "app_id": "article_app",
+  "share_mode": "private",
+  "can_create_share_link": true,
+  "sections": [
+    "what_the_app_can_add",
+    "what_memact_may_create",
+    "features_the_app_can_use",
+    "how_to_stop_future_access"
+  ]
+}
