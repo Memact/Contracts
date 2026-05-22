@@ -1,0 +1,26 @@
+{
+  "schema_version": "memact.feature_run_request.v0",
+  "feature_id": "adaptive-article-overview",
+  "app_id": "article-app-demo",
+  "requested_at": "2026-05-22T10:00:00.000Z",
+  "input": {
+    "article": {
+      "title": "New rules for AI policy",
+      "excerpt": "A regulator published new rules for AI systems used in public services.",
+      "topic": "ai policy",
+      "source": "Example News",
+      "estimated_read_time_minutes": 8
+    },
+    "reading_memory": {
+      "average_read_time_seconds": 260,
+      "average_scroll_depth": 88,
+      "finish_rate": 0.82,
+      "preferred_topics": ["ai policy", "technology regulation"],
+      "skipped_topics": ["celebrity"],
+      "preferred_article_length": "long",
+      "preferred_summary_style": "deep_dive",
+      "repeat_topics": ["ai policy"]
+    },
+    "recent_events": []
+  }
+}

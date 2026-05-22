@@ -1,0 +1,5 @@
+{
+  "schema_id": "reading_preferences",
+  "sub_schema_id": "summary_style_preference",
+  "description": "Whether the user usually prefers quick briefs, key points, deep dives, or simple explainers"
+}

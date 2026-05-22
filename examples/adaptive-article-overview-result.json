@@ -1,0 +1,15 @@
+{
+  "schema_version": "memact.feature_run_result.v0",
+  "feature_id": "adaptive-article-overview",
+  "status": "ok",
+  "output": {
+    "summary_style": "deep_dive",
+    "overview": "Deep dive: New rules for AI policy on ai policy. Start with the main idea, then explain the background, tradeoffs, and what to watch next.",
+    "why_this_style": "Used deep_dive because preferred summary style: deep_dive, often finishes longer reads, prefers long articles.",
+    "follow_up_suggestions": ["Compare this with another source on ai policy.", "Show background before recommendations."],
+    "confidence": "high",
+    "signals_used": ["Preferred summary style: deep_dive", "Often finishes longer reads", "Prefers long articles", "Topic match: ai policy"]
+  },
+  "errors": [],
+  "generated_at": "2026-05-22T10:00:01.000Z"
+}

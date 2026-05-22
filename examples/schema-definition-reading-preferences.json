@@ -1,0 +1,13 @@
+{
+  "schema_id": "reading_preferences",
+  "category": "reading",
+  "description": "Reading behavior and article preference memory",
+  "subschemas": [
+    "preferred_topics",
+    "skipped_topics",
+    "article_length_preference",
+    "summary_style_preference",
+    "engagement_pattern",
+    "repeat_topic_interest"
+  ]
+}
