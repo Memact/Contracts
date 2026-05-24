@@ -4,7 +4,7 @@
   "private": false,
   "license": "Apache-2.0",
   "type": "module",
-  "description": "Shared Memact data contracts and validators.",
+  "description": "Shared contracts for Memact Wiki, category schemas, access, memory, and SDK.",
   "main": "./src/index.mjs",
   "exports": {
     ".": "./src/index.mjs"
