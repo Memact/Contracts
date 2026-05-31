@@ -77,3 +77,69 @@ test("invalid feature result status fails", () => {
     generated_at: new Date().toISOString()
   }).ok, false)
 })
+import { validateCategorySchema } from "../src/index.mjs"
+
+test("valid minimal category schema passes", () => {
+  const result = validateCategorySchema({
+    schema_version: "memact.category_schema.v0",
+    id: "cat-001",
+    name: "Technology",
+    version: "1.0.0"
+  })
+  assert.equal(result.ok, true)
+})
+
+test("valid full category schema passes", () => {
+  const result = validateCategorySchema({
+    schema_version: "memact.category_schema.v0",
+    id: "cat-002",
+    name: "Science",
+    version: "2.0.0",
+    description: "All science related categories",
+    contextFields: ["field", "subfield"],
+    exampleInputs: ["biology", "chemistry"],
+    normalizedOutputShape: { id: "string", label: "string" },
+    wikiTemplates: ["{{ScienceBox}}"],
+    permissionSuggestions: ["read", "write"],
+    safetyNotes: "Ensure accurate classification"
+  })
+  assert.equal(result.ok, true)
+})
+
+test("missing id fails", () => {
+  const result = validateCategorySchema({
+    schema_version: "memact.category_schema.v0",
+    name: "Technology",
+    version: "1.0.0"
+  })
+  assert.equal(result.ok, false)
+})
+
+test("missing name fails", () => {
+  const result = validateCategorySchema({
+    schema_version: "memact.category_schema.v0",
+    id: "cat-003",
+    version: "1.0.0"
+  })
+  assert.equal(result.ok, false)
+})
+
+test("missing version fails", () => {
+  const result = validateCategorySchema({
+    schema_version: "memact.category_schema.v0",
+    id: "cat-004",
+    name: "Health"
+  })
+  assert.equal(result.ok, false)
+})
+
+test("wrong type for contextFields fails", () => {
+  const result = validateCategorySchema({
+    schema_version: "memact.category_schema.v0",
+    id: "cat-005",
+    name: "Tech",
+    version: "1.0.0",
+    contextFields: "not-an-array"
+  })
+  assert.equal(result.ok, false)
+})
