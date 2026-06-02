@@ -1,4 +1,6 @@
 export { validateCaptureEvent } from "./contracts/capture-event.v0.mjs"
+export { validateAppContextSignal } from "./contracts/app-context-signal.v0.mjs"
+export { validateContextProposal } from "./contracts/context-proposal.v0.mjs"
 export { validateInferenceRecord } from "./contracts/inference-record.v0.mjs"
 export { validateSchemaPacket } from "./contracts/schema-packet.v0.mjs"
 export { validateMemoryRecord } from "./contracts/memory-record.v0.mjs"

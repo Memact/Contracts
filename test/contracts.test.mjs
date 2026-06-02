@@ -2,6 +2,8 @@ import test from "node:test"
 import assert from "node:assert/strict"
 import {
   validateCaptureEvent,
+  validateAppContextSignal,
+  validateContextProposal,
   validateFeatureManifest,
   validateFeatureRunResult,
   validateSchemaPacket
@@ -64,6 +66,30 @@ test("valid schema packet and feature manifest pass", () => {
     required_schema_types: [],
     input_contract: "memact.schema_packet.v0",
     output_contract: "memact.feature_run_result.v0"
+  }).ok, true)
+})
+
+test("valid app context signal and proposal pass", () => {
+  assert.equal(validateAppContextSignal({
+    schema_version: "memact.app_context_signal.v0",
+    event_type: "playlist_replay",
+    source_app: "music-app",
+    occurred_at: new Date().toISOString(),
+    category: "music",
+    payload: { genre: "Brazilian phonk" }
+  }).ok, true)
+
+  assert.equal(validateContextProposal({
+    schema_version: "memact.context_proposal.v0",
+    input_kind: "raw_signal",
+    category: "music",
+    title: "Possible music context",
+    context: { evidence: { genre: "Brazilian phonk" } },
+    confidence: 0.35,
+    status: "pending",
+    visibility: "private",
+    source_trail: [],
+    created_at: new Date().toISOString()
   }).ok, true)
 })
 

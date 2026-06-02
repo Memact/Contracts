@@ -10,6 +10,8 @@ repo is the first place to check.
 ## Owns
 
 - Capture event shape.
+- App context signal shape.
+- Context proposal shape.
 - Inference record shape.
 - Context proposal and legacy schema packet shapes.
 - Memory record shape.
@@ -38,8 +40,8 @@ or:
 { ok: false, errors: [{ path, message }] }
 ```
 
-The package exports validators for capture events, inference records, context/schema
-packets, memory records, feature manifests, feature run requests/results,
+The package exports validators for capture events, app context signals, context
+proposals, inference records, context/schema packets, memory records, feature manifests, feature run requests/results,
 access policies, and API errors.
 
 ## Consent and Wiki Examples
