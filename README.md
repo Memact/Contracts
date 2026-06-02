@@ -11,7 +11,7 @@ repo is the first place to check.
 
 - Capture event shape.
 - Inference record shape.
-- Schema packet shape.
+- Context proposal and legacy schema packet shapes.
 - Memory record shape.
 - Feature manifest, request, and result shapes.
 - Access policy and API error shapes.
@@ -38,7 +38,7 @@ or:
 { ok: false, errors: [{ path, message }] }
 ```
 
-The package exports validators for capture events, inference records, schema
+The package exports validators for capture events, inference records, context/schema
 packets, memory records, feature manifests, feature run requests/results,
 access policies, and API errors.
 
@@ -48,6 +48,8 @@ The `examples/` folder includes small request examples for:
 
 - Connect/consent links before app access.
 - Wiki links after app access.
+- Adaptive Article Overview feature runs.
+- Discord Channel Personalizer feature runs.
 
 These examples are intentionally simple. Access owns permission checks; Website owns the user-facing pages.
 
