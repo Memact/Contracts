@@ -1,0 +1,13 @@
+{
+  "schema_version": "memact.category_schema.v0",
+  "id": "cat-001",
+  "name": "Technology",
+  "version": "1.0.0",
+  "description": "Technology related categories",
+  "contextFields": ["field", "subfield", "topic"],
+  "exampleInputs": ["AI", "blockchain", "cloud computing"],
+  "normalizedOutputShape": { "id": "string", "label": "string" },
+  "wikiTemplates": ["{{TechBox}}"],
+  "permissionSuggestions": ["read", "write"],
+  "safetyNotes": "Ensure accurate classification before submission"
+}
