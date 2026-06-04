@@ -1,0 +1,35 @@
+{
+  "schema_version": "memact.task_context_packet.v0",
+  "packet_id": "tcp_nutriplan_conn_123",
+  "actor": {
+    "type": "memact_worker",
+    "id": "worker:onboarding-prefill"
+  },
+  "purpose": "onboarding_prefill",
+  "target_app_id": "nutriplan-lite",
+  "connection_id": "conn_123",
+  "allowed_context": [
+    {
+      "field_path": "diet.preference",
+      "value": "vegetarian",
+      "category": "fitness",
+      "sensitivity": "normal",
+      "source": "accepted_user_memory"
+    },
+    {
+      "field_path": "diet.allergy",
+      "value": "peanuts",
+      "category": "fitness",
+      "sensitivity": "sensitive",
+      "source": "user_verified_memory"
+    }
+  ],
+  "forbidden_context": [
+    "full_profile",
+    "raw_capture_events",
+    "unapproved_memory"
+  ],
+  "retention": "none",
+  "requires_user_review": true,
+  "created_at": "2026-06-04T00:00:00.000Z"
+}

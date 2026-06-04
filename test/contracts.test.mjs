@@ -2,9 +2,15 @@ import test from "node:test"
 import assert from "node:assert/strict"
 import {
   validateCaptureEvent,
+  validateAppContextSignal,
+  validateAppContextProposal,
+  validateCategorySchema,
+  validateContextProposal,
   validateFeatureManifest,
   validateFeatureRunResult,
-  validateSchemaPacket
+  validateMemorySummary,
+  validateSchemaPacket,
+  validateTaskContextPacket
 } from "../src/index.mjs"
 
 test("valid capture event passes", () => {
@@ -77,7 +83,115 @@ test("invalid feature result status fails", () => {
     generated_at: new Date().toISOString()
   }).ok, false)
 })
-import { validateCategorySchema } from "../src/index.mjs"
+
+test("compatibility app activity and context proposal contracts pass", () => {
+  assert.equal(validateAppContextSignal({
+    schema_version: "memact.app_context_signal.v0",
+    event_type: "playlist_replay",
+    source_app: "music-app",
+    occurred_at: new Date().toISOString(),
+    category: "music",
+    payload: { genre: "Brazilian phonk" }
+  }).ok, true)
+
+  assert.equal(validateContextProposal({
+    schema_version: "memact.context_proposal.v0",
+    input_kind: "raw_signal",
+    category: "music",
+    title: "Possible music memory",
+    context: { evidence: { genre: "Brazilian phonk" } },
+    confidence: 0.35,
+    status: "pending",
+    visibility: "private",
+    source_trail: [],
+    created_at: new Date().toISOString()
+  }).ok, true)
+})
+
+test("valid app context proposal and memory summary pass", () => {
+  assert.equal(validateAppContextProposal({
+    schema_version: "memact.app_context_proposal.v0",
+    category: "fitness",
+    title: "Prefers strength workouts",
+    source_app: "NutriPlan Lite",
+    context: { preference: "strength workouts" },
+    confidence: 0.72,
+    status: "pending",
+    visibility: "private",
+    source_trail: [{ type: "app_evidence", evidence: ["completed workout plan"] }]
+  }).ok, true)
+
+  assert.equal(validateMemorySummary({
+    schema_version: "memact.memory_summary.v0",
+    memory_id: "mem_1",
+    memory_type: "fitness_preference",
+    category: "fitness",
+    subject: "Prefers strength workouts",
+    confidence: 0.72,
+    source_count: 1,
+    created_at: new Date().toISOString()
+  }).ok, true)
+})
+
+test("valid task context packet passes", () => {
+  const result = validateTaskContextPacket({
+    schema_version: "memact.task_context_packet.v0",
+    packet_id: "tcp_001",
+    actor: { type: "memact_worker", id: "worker:onboarding-prefill" },
+    purpose: "onboarding_prefill",
+    target_app_id: "nutriplan-lite",
+    connection_id: "conn_123",
+    allowed_context: [
+      {
+        field_path: "diet.preference",
+        value: "vegetarian",
+        category: "fitness",
+        sensitivity: "normal",
+        source: "accepted_user_memory"
+      },
+      {
+        field_path: "diet.allergy",
+        value: "peanuts",
+        category: "fitness",
+        sensitivity: "sensitive",
+        source: "user_verified_memory"
+      }
+    ],
+    forbidden_context: ["full_profile", "raw_capture_events", "unapproved_memory"],
+    retention: "none",
+    requires_user_review: true,
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, true)
+})
+
+test("invalid task context packet rejects full-profile unsafe shape", () => {
+  const result = validateTaskContextPacket({
+    schema_version: "memact.task_context_packet.v0",
+    packet_id: "tcp_bad",
+    actor: { type: "personal_ai", id: "worker:bad" },
+    purpose: "onboarding_prefill",
+    target_app_id: "nutriplan-lite",
+    connection_id: "conn_123",
+    allowed_context: [
+      {
+        field_path: "profile",
+        value: { full_name: "Example User", full_profile: true },
+        category: "all",
+        sensitivity: "high",
+        source: "full_profile_dump"
+      }
+    ],
+    forbidden_context: ["raw_capture_events", "unapproved_memory"],
+    retention: "session",
+    requires_user_review: true,
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, false)
+  assert.ok(result.errors.some((error) => error.path === "actor.type"))
+  assert.ok(result.errors.some((error) => error.path === "forbidden_context"))
+  assert.ok(result.errors.some((error) => error.path === "retention"))
+})
 
 test("valid minimal category schema passes", () => {
   const result = validateCategorySchema({

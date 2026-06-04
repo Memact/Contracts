@@ -5,8 +5,8 @@
   "can_create_share_link": true,
   "sections": [
     "what_the_app_can_add",
-    "what_memact_may_create",
-    "features_the_app_can_use",
+    "memory_memact_may_save",
+    "allowed_memory_the_app_can_use",
     "how_to_stop_future_access"
   ]
 }

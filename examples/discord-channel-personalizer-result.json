@@ -1,0 +1,28 @@
+{
+  "schema_version": "memact.feature_run_result.v0",
+  "feature_id": "discord-channel-personalizer",
+  "status": "ok",
+  "output": {
+    "recommended_channels": [
+      {
+        "channel_id": "1",
+        "name": "memact-api",
+        "reason": "Matches approved memory."
+      }
+    ],
+    "channels_to_avoid": [
+      {
+        "channel_id": "2",
+        "name": "memes",
+        "reason": "Matches a muted or skipped topic."
+      }
+    ],
+    "personalization_notes": [
+      "Use these as suggestions, not automatic channel changes."
+    ],
+    "confidence": "medium",
+    "signals_used": ["approved Wiki memory", "server channel names/topics"]
+  },
+  "errors": [],
+  "generated_at": "2026-05-22T10:00:01.000Z"
+}

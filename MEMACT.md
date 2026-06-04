@@ -1,54 +1,56 @@
 # Memact Contributor Handoff
 
-Memact is a playground where apps personalize using context the user can actually see and control.
+Memact is where users see what apps know about them and control it.
 
-It is still a playground, even if the old Playground repo is no longer the main place to contribute.
-
-The current playground is Schema: app categories, context shapes, examples, prompts, and tests.
-
-Apps send context. App categories give it shape. Wiki gives users control.
+Contracts keeps the repos from inventing incompatible shapes.
 
 ## The idea
 
-Most apps personalize quietly. They guess from clicks, isolated profiles, and hidden assumptions.
+An app may suggest memory directly:
 
-Memact does something different. Apps can send or propose context, but the user gets a Wiki where that context can be reviewed, edited, rejected, deleted, or shared.
+```text
+User prefers high-energy music.
+```
 
-If a music app notices a user keeps replaying Brazilian phonk, it can propose something readable:
+Or it may send specific app activity:
 
-"Prefers Brazilian phonk, especially high-energy tracks."
+```text
+User replayed Brazilian phonk playlists often this month and skipped slow acoustic playlists.
+```
 
-The user can accept it, edit it, or reject it.
+Those are not the same thing.
 
-## What contributors do now
+Contracts defines the shapes for both paths so Access, SDK, Context, Wiki, and
+Memory agree.
 
-Pick an app category and define how context should work there.
+## Current Objects
 
-Examples: music, video-streaming, movie-booking, shopping, learning, news-articles, fitness, travel, food-delivery, creator-tools, productivity, and AI assistants.
+- `AppContextProposal`: a memory suggestion waiting for user review.
+- `WikiEntry`: accepted, pending, edited, rejected, or deleted user-visible memory.
+- `CategorySchema`: a Context category rule.
+- `MemorySummary`: compact memory an app may read after consent.
+- `TaskContextPacket`: a small approved-memory packet for a Memact worker.
+- `SDKResponse`: response shape for SDK helpers.
 
-Contributors can add context fields, messy app context examples, expected Wiki outputs, normalization rules, entry templates, prompts, access suggestions, and tests.
-
-## Parts
-
-- Access handles consent, apps, API keys, scopes, and permissions.
-- Wiki is where users add, edit, approve, reject, delete, and share context.
-- Schema defines app category schemas.
-- Memory stores accepted context, history, retrieval, and app-safe summaries.
-- Contracts defines shared shapes.
-- SDK lets apps connect to Memact.
+Compatibility objects for older Capture, Inference, Schema packet, and feature
+work remain so old integrations and contributor PRs do not break.
 
 ## Rules
 
+- Activity is not identity.
+- Users control what becomes memory.
 - Default visibility should be private.
 - Apps should not get full Wiki access.
-- Apps should only get relevant category context with permission.
-- User-added context is stronger than app-proposed context.
-- Important app writes should require approval.
-- Keep user-facing copy simple.
-- Do not bring back Capture, Inference, or Intent as core product language.
+- Apps should only get relevant category memory with permission.
+- Memact workers should only receive task-specific approved fragments.
+- Prefer readable memory suggestions over raw personal data.
+- Do not infer sensitive traits.
+- Do not write fake certainty.
 
-## Best explanation
+## AI worker rule
 
-Memact is a playground for user-controlled app context.
+Memact AI is memory-blind by default.
 
-Apps bring context. Categories organize it. Wiki keeps the user in charge.
+A worker gets a `TaskContextPacket`, not the full Wiki, not the full Memory
+store, and not raw app activity. Today this can run with a mock/local worker.
+Future model providers should plug into the same packet boundary.

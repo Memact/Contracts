@@ -1,0 +1,28 @@
+{
+  "schema_version": "memact.feature_run_request.v0",
+  "feature_id": "discord-channel-personalizer",
+  "app_id": "discord-bot",
+  "requested_at": "2026-05-22T10:00:00.000Z",
+  "input": {
+    "activity_categories": ["community:discord"],
+    "user_memory": {
+      "interests": ["developer tools", "memact"],
+      "muted_topics": ["memes"]
+    },
+    "server": {
+      "name": "Memact",
+      "channels": [
+        {
+          "id": "1",
+          "name": "memact-api",
+          "topic": "SDK and API help"
+        },
+        {
+          "id": "2",
+          "name": "memes",
+          "topic": "off-topic jokes"
+        }
+      ]
+    }
+  }
+}
