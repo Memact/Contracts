@@ -10,7 +10,10 @@ import {
   validateFeatureRunResult,
   validateMemorySummary,
   validateSchemaPacket,
-  validateTaskContextPacket
+  validateTaskContextPacket,
+  validateCapRequest,
+  validateCapPacket,
+  validateContextProposalV1
 } from "../src/index.mjs"
 
 test("valid capture event passes", () => {
@@ -256,4 +259,128 @@ test("wrong type for contextFields fails", () => {
     contextFields: "not-an-array"
   })
   assert.equal(result.ok, false)
+})
+
+test("valid CAP request passes", () => {
+  const result = validateCapRequest({
+    schema_version: "memact.cap_request.v0",
+    request_id: "cap_req_1",
+    app_id: "food-app",
+    connection_id: "con_1",
+    purpose: "onboarding_prefill",
+    requested_context: [
+      { description: "food restrictions", field_hint: "diet.restrictions", category_hint: "food", required: true }
+    ],
+    requested_categories: ["food", "fitness"],
+    requested_scopes: ["cap:request"],
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, true)
+})
+
+test("invalid CAP request missing requested context fails", () => {
+  const result = validateCapRequest({
+    schema_version: "memact.cap_request.v0",
+    request_id: "cap_req_bad",
+    app_id: "food-app",
+    purpose: "onboarding_prefill",
+    requested_context: [],
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, false)
+  assert.ok(result.errors.some((error) => error.path === "requested_context"))
+})
+
+test("valid CAP packet passes", () => {
+  const result = validateCapPacket({
+    schema_version: "memact.cap_packet.v0",
+    packet_id: "cap_pkt_1",
+    request_id: "cap_req_1",
+    app_id: "food-app",
+    connection_id: "con_1",
+    purpose: "onboarding_prefill",
+    allowed_context: [
+      {
+        field_path: "diet.allergy",
+        value: "peanuts",
+        category: "food",
+        sensitivity: "sensitive",
+        source: "user_verified_memory",
+        confidence: 1
+      }
+    ],
+    missing_context: [{ description: "cuisine preference", required: false, reason: "No approved matching memory." }],
+    forbidden_context: ["full_profile", "raw_capture_events", "unapproved_memory"],
+    retention: "none",
+    requires_user_review: true,
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, true)
+})
+
+test("invalid CAP packet rejects forbidden full profile data", () => {
+  const result = validateCapPacket({
+    schema_version: "memact.cap_packet.v0",
+    packet_id: "cap_pkt_bad",
+    request_id: "cap_req_bad",
+    app_id: "food-app",
+    connection_id: "con_1",
+    purpose: "onboarding_prefill",
+    allowed_context: [
+      {
+        field_path: "profile",
+        value: { full_profile: true },
+        category: "all",
+        sensitivity: "high",
+        source: "full_profile_dump"
+      }
+    ],
+    missing_context: [],
+    forbidden_context: ["full_profile", "raw_capture_events", "unapproved_memory"],
+    retention: "none",
+    requires_user_review: false,
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, false)
+  assert.ok(result.errors.some((error) => error.path.includes("allowed_context")))
+})
+
+test("valid context proposal v1 passes", () => {
+  const result = validateContextProposalV1({
+    schema_version: "memact.context_proposal.v1",
+    proposal_id: "ctx_prop_1",
+    app_id: "fitness-app",
+    connection_id: "con_1",
+    source_type: "app",
+    category: "fitness",
+    field_path: "fitness.goal",
+    proposed_value: "strength",
+    evidence_summary: "User selected strength training in onboarding.",
+    confidence: 0.82,
+    status: "pending",
+    sensitivity: "normal",
+    visibility: "private",
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, true)
+})
+
+test("invalid context proposal v1 status fails", () => {
+  const result = validateContextProposalV1({
+    schema_version: "memact.context_proposal.v1",
+    proposal_id: "ctx_prop_bad",
+    app_id: "fitness-app",
+    connection_id: "con_1",
+    source_type: "app",
+    category: "fitness",
+    field_path: "fitness.goal",
+    proposed_value: "strength",
+    confidence: 0.82,
+    status: "accepted",
+    sensitivity: "normal",
+    visibility: "private",
+    created_at: new Date().toISOString()
+  })
+  assert.equal(result.ok, false)
+  assert.ok(result.errors.some((error) => error.path === "status"))
 })
