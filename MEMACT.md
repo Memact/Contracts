@@ -1,54 +1,36 @@
-# Memact Contributor Handoff
+# Memact — Contracts
 
-Memact is a playground where apps personalize using context the user can actually see and control.
+Memact is open identity infrastructure.
 
-It is still a playground, even if the old Playground repo is no longer the main place to contribute.
+Users own an identity address. Apps and providers exchange context through open protocols with well-defined schemas.
 
-The current contribution path is Context, formerly Schema: app categories, context shapes, examples, prompts, and tests.
+## What Contracts Does
 
-Apps send context. App categories give it shape. Wiki gives users control.
+Contracts is the **protocol schema repository** — the canonical source of truth for all data shapes in the Memact identity protocol.
 
-## The idea
+Contracts defines validators and schemas for:
+- **Identity addresses** — format, validation, parsing
+- **CAP messages** — context access request and response shapes
+- **CCP messages** — observation contribution shapes (including `entry_type` and `evidence`)
+- **CRP messages** — rectification request shapes
+- **Provider capability documents** — `.well-known/memact-configuration` schema
+- **Memory records** — approved context entry shapes
 
-Most apps personalize quietly. They guess from clicks, isolated profiles, and hidden assumptions.
+## Deprecation Notice
 
-Memact does something different. Apps can send or propose context, but the user gets a Wiki where that context can be reviewed, edited, rejected, deleted, or shared.
+The following schemas reflect the pre-2026 architecture and are deprecated. They will be removed in Contracts v2:
 
-If a music app notices a user keeps replaying Brazilian phonk, it can propose something readable:
+| Deprecated Schema | Replaced By |
+|---|---|
+| `capture-event.v0` | `observation-event.v1` (CCP) |
+| `inference-record.v0` | (retired — normalization is provider-internal) |
+| `feature-manifest.v0` | (retired — feature runtime removed from protocol) |
+| `feature-run.v0` | (retired — same) |
 
-"Prefers Brazilian phonk, especially high-energy tracks."
+## Versioning
 
-The user can accept it, edit it, or reject it.
+All schemas are versioned. Breaking changes require a version increment. Deprecated schemas will be removed no sooner than 12 months after the deprecation notice.
 
-## What contributors do now
+## License
 
-Pick an app category and define how context should work there.
-
-Examples: music, video-streaming, movie-booking, shopping, learning, news-articles, fitness, travel, food-delivery, creator-tools, productivity, and AI assistants.
-
-Contributors can add context fields, messy app context examples, expected Wiki outputs, normalization rules, entry templates, prompts, access suggestions, and tests.
-
-## Parts
-
-- Access handles consent, apps, API keys, scopes, and permissions.
-- Wiki is where users add, edit, approve, reject, delete, and share context.
-- Context defines app category rules and proposal templates.
-- Memory stores accepted context, history, retrieval, and app-safe summaries.
-- Contracts defines shared shapes.
-- SDK lets apps connect to Memact.
-
-## Rules
-
-- Default visibility should be private.
-- Apps should not get full Wiki access.
-- Apps should only get relevant category context with permission.
-- User-added context is stronger than app-proposed context.
-- Important app writes should require approval.
-- Keep user-facing copy simple.
-- Do not bring back Capture, Inference, or Intent as core product language.
-
-## Best explanation
-
-Memact is a playground for user-controlled app context.
-
-Apps bring context. Categories organize it. Wiki keeps the user in charge.
+Apache 2.0.
