@@ -1,63 +1,26 @@
 # Memact Contracts
 
-Contracts define the data shapes used by the Memact SDK, backend, and feature runtime.
+Contracts defines the validation shapes used across the Memact protocols.
 
-They are small validators, not storage or network code.
+## What Contracts Does
 
-If a contributor is unsure how a feature or SDK call should shape its data, this
-repo is the first place to check.
+This repository contains the validator functions for schemas. It does not perform network or database operations. It only checks if data structures conform to the expected format.
 
-## Owns
-
-- Capture event shape.
-- App context signal shape.
-- Context proposal shape.
-- Inference record shape.
-- Context proposal and legacy schema packet shapes.
-- Memory record shape.
-- Feature manifest, request, and result shapes.
-- Access policy and API error shapes.
-
-## Does Not Own
-
-- API key verification.
-- Capture storage.
-- Inference logic.
-- Feature execution.
-- Memory retrieval.
-
-## Current Code
-
-Validators return:
-
-```js
-{ ok: true, value }
-```
-
-or:
-
-```js
-{ ok: false, errors: [{ path, message }] }
-```
-
-The package exports validators for capture events, app context signals, context
-proposals, inference records, context/schema packets, memory records, feature manifests, feature run requests/results,
-access policies, and API errors.
-
-## Consent and Wiki Examples
-
-The `examples/` folder includes small request examples for:
-
-- Connect/consent links before app access.
-- Wiki links after app access.
-- Adaptive Article Overview feature runs.
-- Discord Channel Personalizer feature runs.
-
-These examples are intentionally simple. Access owns permission checks; Website owns the user-facing pages.
+Contracts validates:
+- User identity addresses.
+- CAP requests and response packets.
+- CCP suggestions (proposals).
+- Provider capability documents.
+- Database memory records.
 
 ## Development
 
+To install and run tests:
 ```powershell
 npm install
-npm run check
+npm test
 ```
+
+## License
+
+Contracts is open source under the Apache 2.0 license.

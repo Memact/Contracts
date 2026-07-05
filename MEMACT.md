@@ -1,36 +1,29 @@
-# Memact — Contracts
+# Memact Contracts
 
-Memact is open identity infrastructure.
-
-Users own an identity address. Apps and providers exchange context through open protocols with well-defined schemas.
+Memact defines open protocols so that apps and providers can speak the same language when requesting or contributing context.
 
 ## What Contracts Does
 
-Contracts is the **protocol schema repository** — the canonical source of truth for all data shapes in the Memact identity protocol.
+This repository contains the official validation schemas and formats. It ensures all parties format messages correctly.
 
-Contracts defines validators and schemas for:
-- **Identity addresses** — format, validation, parsing
-- **CAP messages** — context access request and response shapes
-- **CCP messages** — observation contribution shapes (including `entry_type` and `evidence`)
-- **CRP messages** — rectification request shapes
-- **Provider capability documents** — `.well-known/memact-configuration` schema
-- **Memory records** — approved context entry shapes
+Contracts defines validation for:
+- User identity addresses (validation and parsing).
+- CAP messages (context access request and response shapes).
+- CCP messages (observation contribution shapes, including entry type and evidence).
+- Provider configurations (the `.well-known/memact-configuration` discovery metadata).
+- Memory records (how approved context is structured in the database).
 
-## Deprecation Notice
+## Deprecations
 
-The following schemas reflect the pre-2026 architecture and are deprecated. They will be removed in Contracts v2:
-
-| Deprecated Schema | Replaced By |
-|---|---|
-| `capture-event.v0` | `observation-event.v1` (CCP) |
-| `inference-record.v0` | (retired — normalization is provider-internal) |
-| `feature-manifest.v0` | (retired — feature runtime removed from protocol) |
-| `feature-run.v0` | (retired — same) |
+Older, pre-2026 data formats are deprecated and will be removed in the future:
+- `capture-event.v0` (replaced by CCP contribution shapes).
+- `inference-record.v0` (retired; inference is now internal to the provider).
+- `feature-manifest.v0` and `feature-run.v0` (retired; runtime features are removed from the protocol).
 
 ## Versioning
 
-All schemas are versioned. Breaking changes require a version increment. Deprecated schemas will be removed no sooner than 12 months after the deprecation notice.
+All schemas are versioned. Breaking changes require a version increment.
 
 ## License
 
-Apache 2.0.
+Apache 2.0. The schemas are open and free.
