@@ -16,7 +16,7 @@ Contracts validates:
 ## Development
 
 To install and run tests:
-```powershell
+```sh
 npm install
 npm test
 ```
